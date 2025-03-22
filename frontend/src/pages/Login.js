@@ -1,25 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import { fetchData } from '../connections/user';
+
+// Your existing fetchData function
+export const fetchData = async () => {
+  try {
+    const { data } = await axios.get("http://localhost:5000/api/users/getData");
+    return data;
+  } catch (error) {
+    console.error("API Error:", error);
+    return [];
+  }
+};
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('donor');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [dataFetched, setDataFetched] = useState(false);
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const data = await fetchData();
+        setUserData(data);
+        setDataFetched(true);
+        console.log("User data fetched successfully");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setError("Unable to connect to the server. Please try again later.");
+      }
+    };
+
+    getUserData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     
+    // Check if data has been fetched
+    if (!dataFetched || !userData) {
+      setError("Still loading user data. Please wait a moment and try again.");
+      setLoading(false);
+      return;
+    }
+    
     try {
-      // Get all users data using your fetchData function
-      const usersData = await fetchData();
-      
       // Find the user that matches the provided credentials
-      const matchedUser = usersData.find(user => 
+      const matchedUser = userData.find(user => 
         user.email === email && 
         user.password === password && 
         user.role === role
@@ -64,6 +98,12 @@ const LoginPage = () => {
             <div className="card-body p-4">
               <h2 className="text-center mb-4">Login</h2>
               
+              {!dataFetched && !error && (
+                <div className="alert alert-info" role="alert">
+                  Loading user data...
+                </div>
+              )}
+              
               {error && (
                 <div className="alert alert-danger" role="alert">
                   {error}
@@ -82,6 +122,7 @@ const LoginPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
+                    disabled={!dataFetched}
                   />
                 </div>
                 
@@ -96,6 +137,7 @@ const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     required
+                    disabled={!dataFetched}
                   />
                 </div>
                 
@@ -111,6 +153,7 @@ const LoginPage = () => {
                       value="donor"
                       checked={role === 'donor'}
                       onChange={() => setRole('donor')}
+                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="donor">Donor</label>
                   </div>
@@ -123,6 +166,7 @@ const LoginPage = () => {
                       value="volunteer"
                       checked={role === 'volunteer'}
                       onChange={() => setRole('volunteer')}
+                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="volunteer">Volunteer</label>
                   </div>
@@ -135,6 +179,7 @@ const LoginPage = () => {
                       value="recipient"
                       checked={role === 'recipient'}
                       onChange={() => setRole('recipient')}
+                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="recipient">Recipient</label>
                   </div>
@@ -145,7 +190,7 @@ const LoginPage = () => {
                   <button 
                     type="submit" 
                     className="btn btn-primary"
-                    disabled={loading}
+                    disabled={loading || !dataFetched}
                   >
                     {loading ? 'Logging in...' : 'Login'}
                   </button>

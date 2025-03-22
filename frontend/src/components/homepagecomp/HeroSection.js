@@ -1,5 +1,5 @@
 import React from 'react';
-
+import HeoImg from './images/heroimages/img1.png';
 const HeroSection = () => {
   return (
     <div className="bg-light py-5">
@@ -21,7 +21,7 @@ const HeroSection = () => {
           </div>
           <div className="col-lg-6">
             <img 
-              src="/api/placeholder/600/400" 
+              src={HeoImg}
               alt="Food Sharing" 
               className="img-fluid rounded shadow"
             />

@@ -9,7 +9,7 @@ const Header = () => {
       <div className="container">
         <a className="navbar-brand d-flex align-items-center" href="/">
           <img src="/api/placeholder/40/40" alt="Logo" className="me-2" />
-          <span className="fw-bold text-success"></span>
+          <span className="fw-bold text-success">Padeyam</span>
         </a>
 
         <button
@@ -35,7 +35,7 @@ const Header = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/donate-food">
+              <a className="nav-link" href="/volunteers">
                 <span className="me-1"></span>Volunteers
               </a>
             </li>
@@ -45,8 +45,8 @@ const Header = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/communities">
-                <span className="me-1"></span>Communities
+              <a className="nav-link" href="/maptrack">
+                <span className="me-1"></span>MapTrack
               </a>
             </li>
             <li className="nav-item">
