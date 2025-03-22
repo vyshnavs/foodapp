@@ -1,25 +1,11 @@
 const User = require('../models/user');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-
-// exports.register = async (req, res) => {
-//     try {
-//         const { name, email, password } = req.body;
-//         const hashedPassword = await bcrypt.hash(password, 10);
-//         const user = new User({ name, email, password: hashedPassword });
-//         await user.save();
-//         res.status(201).json({ message: 'User registered successfully' });
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
 
 
 const register = async (req, res) => {
     try{
-        const {email,password,role}=req.body;
-        console.log(email,password,role);
-        const user = new User({email,password,role});
+        const {name, email, password, address, mobile, role, description}=req.body;
+        console.log(req.body);
+        const user = new User({name, email, password, address, mobile, role, description});
         await user.save();
         res.status(201).json({ message: 'Data registered successfully' });
     } catch (err) {
