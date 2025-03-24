@@ -1,15 +1,18 @@
 import React from 'react';
 import { Users, MessageSquare, Calendar, HandHeart } from 'lucide-react';
-
+import foodshareImg from './images/communityimages/foodshare.png';
+import foodrescueImg from './images/communityimages/foodrescue.png';
+import restaurentImg from './images/communityimages/restaurent.png';
+import campusImg from './images/communityimages/campus.png';
 const Communities = () => {
   // Sample data
   const communities = [
     {
       id: 1,
-      name: 'Neighborhood Food Share',
+      name: 'Food Share',
       members: 254,
       activities: 12,
-      image: '/api/placeholder/300/200',
+      image: foodshareImg,
       description: 'Local residents organizing weekly food distributions and community fridges.'
     },
     {
@@ -17,7 +20,7 @@ const Communities = () => {
       name: 'Food Rescue Volunteers',
       members: 142,
       activities: 8,
-      image: '/api/placeholder/300/200',
+      image: foodrescueImg,
       description: 'Volunteers who pick up excess food from events and deliver to shelters.'
     },
     {
@@ -25,7 +28,7 @@ const Communities = () => {
       name: 'Restaurant Alliance',
       members: 87,
       activities: 15,
-      image: '/api/placeholder/300/200',
+      image:restaurentImg,
       description: 'Local restaurants coordinating donations of prepared meals and ingredients.'
     },
     {
@@ -33,13 +36,13 @@ const Communities = () => {
       name: 'Campus Food Security',
       members: 179,
       activities: 5,
-      image: '/api/placeholder/300/200',
+      image: campusImg,
       description: 'University students and staff addressing campus food insecurity.'
     }
   ];
 
   return (
-    <section className="py-5 bg-white">
+    <section className="py-5 bg-light">
       <div className="container">
         <div className="text-center mb-5">
           <h2 className="mb-3">Join Different Communities</h2>

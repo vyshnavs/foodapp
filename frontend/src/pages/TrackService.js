@@ -18,64 +18,204 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const FoodVolunteerTracker = () => {
-  // Map state
+  // Map state - centered on India
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(-122.4376);
-  const [lat, setLat] = useState(37.7577);
-  const [zoom, setZoom] = useState(12);
+  const [lng, setLng] = useState(78.9629); // India's approximate longitude
+  const [lat, setLat] = useState(20.5937); // India's approximate latitude
+  const [zoom, setZoom] = useState(5); // Zoomed out to show more of India
 
   // Search state
   const [searchAddress, setSearchAddress] = useState('');
   const [searchRadius, setSearchRadius] = useState(5);
   const [filterType, setFilterType] = useState('all');
+  const [selectedState, setSelectedState] = useState('all');
+  const [selectedCity, setSelectedCity] = useState('all');
 
   // Results state
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Sample data - in a real app, this would come from your API
+  // Sample Indian states and cities
+  const indianStates = [
+    { value: 'all', label: 'All States' },
+    { value: 'delhi', label: 'Delhi' },
+    { value: 'maharashtra', label: 'Maharashtra' },
+    { value: 'tamil_nadu', label: 'Tamil Nadu' },
+    { value: 'karnataka', label: 'Karnataka' },
+    { value: 'uttar_pradesh', label: 'Uttar Pradesh' }
+  ];
+
+  // Cities based on selected state
+  const getCitiesForState = (state) => {
+    switch(state) {
+      case 'delhi':
+        return [
+          { value: 'all', label: 'All Cities' },
+          { value: 'new_delhi', label: 'New Delhi' },
+        ];
+      case 'maharashtra':
+        return [
+          { value: 'all', label: 'All Cities' },
+          { value: 'mumbai', label: 'Mumbai' },
+          { value: 'pune', label: 'Pune' },
+          { value: 'nagpur', label: 'Nagpur' }
+        ];
+      case 'tamil_nadu':
+        return [
+          { value: 'all', label: 'All Cities' },
+          { value: 'chennai', label: 'Chennai' },
+          { value: 'coimbatore', label: 'Coimbatore' },
+          { value: 'madurai', label: 'Madurai' }
+        ];
+      case 'karnataka':
+        return [
+          { value: 'all', label: 'All Cities' },
+          { value: 'bangalore', label: 'Bangalore' },
+          { value: 'mysore', label: 'Mysore' }
+        ];
+      case 'uttar_pradesh':
+        return [
+          { value: 'all', label: 'All Cities' },
+          { value: 'lucknow', label: 'Lucknow' },
+          { value: 'kanpur', label: 'Kanpur' },
+          { value: 'agra', label: 'Agra' }
+        ];
+      default:
+        return [{ value: 'all', label: 'All Cities' }];
+    }
+  };
+
+  const [cities, setCities] = useState(getCitiesForState('all'));
+
+  // Update cities when state changes
+  useEffect(() => {
+    setCities(getCitiesForState(selectedState));
+    setSelectedCity('all');
+  }, [selectedState]);
+
+  // Sample data - Indian locations
   const mockData = [
     {
       id: 1,
-      name: "Community Food Bank",
+      name: "Akshaya Patra Foundation",
       type: "food",
-      address: "123 Main St, San Francisco, CA",
-      coordinates: [37.773, -122.431],
-      availability: "Mon-Fri: 9am-5pm",
-      items: ["Rice", "Beans", "Canned goods", "Fresh produce"],
-      contact: "info@communityfoodbank.org",
+      address: "Mathura Road, New Delhi",
+      coordinates: [28.6139, 77.2090], // Delhi
+      state: "delhi",
+      city: "new_delhi",
+      availability: "Mon-Sat: 10am-4pm",
+      items: ["Rice", "Dal", "Vegetables", "Chapati"],
+      contact: "info@akshayapatra.org",
     },
     {
       id: 2,
-      name: "Sarah Johnson",
+      name: "Ravi Kumar",
       type: "volunteer",
-      address: "456 Market St, San Francisco, CA",
-      coordinates: [37.763, -122.415],
+      address: "Connaught Place, New Delhi",
+      coordinates: [28.6292, 77.2183], // Delhi
+      state: "delhi",
+      city: "new_delhi",
       availability: "Weekends",
-      skills: ["Delivery", "Meal prep"],
-      contact: "sarahj@example.com",
+      skills: ["Delivery", "Cooking"],
+      contact: "ravi@example.com",
     },
     {
       id: 3,
-      name: "Downtown Soup Kitchen",
+      name: "Mumbai Food Bank",
       type: "food",
-      address: "789 Mission St, San Francisco, CA",
-      coordinates: [37.781, -122.401],
-      availability: "Daily: 11am-2pm",
-      items: ["Hot meals", "Sandwiches"],
-      contact: "contact@downtownsoup.org",
+      address: "Andheri East, Mumbai",
+      coordinates: [19.0760, 72.8777], // Mumbai
+      state: "maharashtra",
+      city: "mumbai",
+      availability: "Daily: 9am-5pm",
+      items: ["Groceries", "Fresh produce", "Meals"],
+      contact: "help@mumbaifoodbank.org",
     },
     {
       id: 4,
-      name: "Miguel Rodriguez",
+      name: "Anjali Desai",
       type: "volunteer",
-      address: "101 Valencia St, San Francisco, CA",
-      coordinates: [37.768, -122.422],
+      address: "Bandra West, Mumbai",
+      coordinates: [19.0596, 72.8295], // Mumbai
+      state: "maharashtra",
+      city: "mumbai",
       availability: "Evenings after 6pm",
       skills: ["Delivery", "Food sorting"],
-      contact: "miguel@example.com",
+      contact: "anjali@example.com",
+    },
+    {
+      id: 5,
+      name: "Feed Chennai",
+      type: "food",
+      address: "T. Nagar, Chennai",
+      coordinates: [13.0500, 80.2502], // Chennai
+      state: "tamil_nadu",
+      city: "chennai",
+      availability: "Daily: 11am-3pm",
+      items: ["Rice meals", "Breakfast", "Snacks"],
+      contact: "info@feedchennai.org",
+    },
+    {
+      id: 6,
+      name: "Venkatesh R",
+      type: "volunteer",
+      address: "Adyar, Chennai",
+      coordinates: [13.0012, 80.2565], // Chennai
+      state: "tamil_nadu",
+      city: "chennai",
+      availability: "Mon-Fri evenings",
+      skills: ["Cooking", "Organizing"],
+      contact: "venkatesh@example.com",
+    },
+    {
+      id: 7,
+      name: "Bangalore Food Trust",
+      type: "food",
+      address: "Indiranagar, Bangalore",
+      coordinates: [12.9784, 77.6408], // Bangalore
+      state: "karnataka",
+      city: "bangalore",
+      availability: "Mon-Sat: 10am-6pm",
+      items: ["Groceries", "Cooked meals", "Fruits"],
+      contact: "contact@bangalorefoodtrust.org",
+    },
+    {
+      id: 8,
+      name: "Kiran Sharma",
+      type: "volunteer",
+      address: "Koramangala, Bangalore",
+      coordinates: [12.9352, 77.6245], // Bangalore
+      state: "karnataka",
+      city: "bangalore",
+      availability: "Weekends & holidays",
+      skills: ["Delivery", "Distribution"],
+      contact: "kiran@example.com",
+    },
+    {
+      id: 9,
+      name: "Lucknow Community Kitchen",
+      type: "food",
+      address: "Hazratganj, Lucknow",
+      coordinates: [26.8467, 80.9462], // Lucknow
+      state: "uttar_pradesh",
+      city: "lucknow",
+      availability: "Daily: 12pm-3pm",
+      items: ["Biryani", "Curry", "Rotis", "Sweets"],
+      contact: "help@lucknoweats.org",
+    },
+    {
+      id: 10,
+      name: "Amar Singh",
+      type: "volunteer",
+      address: "Gomti Nagar, Lucknow",
+      coordinates: [26.8606, 81.0089], // Lucknow
+      state: "uttar_pradesh",
+      city: "lucknow",
+      availability: "Anytime on call",
+      skills: ["Driving", "Distribution", "Cooking"],
+      contact: "amarsingh@example.com",
     },
   ];
 
@@ -92,7 +232,7 @@ const FoodVolunteerTracker = () => {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map.current);
 
-    // Try to get user's current location
+    // Try to get user's current location in India
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
@@ -111,14 +251,36 @@ const FoodVolunteerTracker = () => {
     });
   }, []);
 
-  // Function to simulate geocoding an address
+  // Function to geocode an address in India
   const geocodeAddress = async (address) => {
     setLoading(true);
 
     try {
-      // Simulate coordinates near San Francisco for any address
-      const simulatedLng = -122.4194 + (Math.random() * 0.05 - 0.025);
-      const simulatedLat = 37.7749 + (Math.random() * 0.05 - 0.025);
+      // Simulate coordinates near the selected state/city for any address
+      let simulatedLat, simulatedLng;
+
+      if (selectedState !== 'all') {
+        // Find a location in our mock data that matches the state/city filter
+        const stateLocations = mockData.filter(loc => 
+          loc.state === selectedState && 
+          (selectedCity === 'all' || loc.city === selectedCity)
+        );
+        
+        if (stateLocations.length > 0) {
+          // Use coordinates from a random location in the filtered set
+          const randomLocation = stateLocations[Math.floor(Math.random() * stateLocations.length)];
+          simulatedLat = randomLocation.coordinates[0];
+          simulatedLng = randomLocation.coordinates[1];
+        } else {
+          // Fallback to general India coordinates
+          simulatedLat = 20.5937 + (Math.random() * 0.05 - 0.025);
+          simulatedLng = 78.9629 + (Math.random() * 0.05 - 0.025);
+        }
+      } else {
+        // General India coordinates
+        simulatedLat = 20.5937 + (Math.random() * 0.05 - 0.025);
+        simulatedLng = 78.9629 + (Math.random() * 0.05 - 0.025);
+      }
 
       // Fly the map to the new location
       if (map.current) {
@@ -135,7 +297,7 @@ const FoodVolunteerTracker = () => {
 
   // Function to search for locations within radius
   const searchLocations = (centerLng, centerLat) => {
-    // Filter our mock data based on distance
+    // Filter our mock data based on distance, type, state, and city
     const results = mockData.filter((location) => {
       // Calculate rough distance (this is a simplified calculation)
       const distance =
@@ -144,11 +306,12 @@ const FoodVolunteerTracker = () => {
             Math.pow(location.coordinates[0] - centerLat, 2)
         ) * 111; // Convert to km (approximate)
 
-      // Filter by type and distance
-      return (
-        (filterType === 'all' || location.type === filterType) &&
-        distance <= searchRadius
-      );
+      // Apply all filters
+      const matchesType = filterType === 'all' || location.type === filterType;
+      const matchesState = selectedState === 'all' || location.state === selectedState;
+      const matchesCity = selectedCity === 'all' || location.city === selectedCity;
+
+      return matchesType && matchesState && matchesCity && distance <= searchRadius;
     });
 
     setLocations(results);
@@ -166,7 +329,10 @@ const FoodVolunteerTracker = () => {
         const marker = L.marker([location.coordinates[0], location.coordinates[1]])
           .addTo(map.current)
           .bindPopup(
-            `<h5>${location.name}</h5><p>${location.type === 'food' ? 'Food Source' : 'Volunteer'}</p>`
+            <div>
+              <h5>{location.name}</h5>
+              <p>{location.type === 'food' ? 'Food Source' : 'Volunteer'}</p>
+            </div>
           );
 
         // Open popup if this is the selected location
@@ -182,7 +348,7 @@ const FoodVolunteerTracker = () => {
   // Handle form submission
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchAddress) {
+    if (searchAddress || selectedState !== 'all') {
       geocodeAddress(searchAddress);
     }
   };
@@ -191,6 +357,38 @@ const FoodVolunteerTracker = () => {
   const handleConnect = (location) => {
     alert(`Connection request sent to ${location.name}!`);
   };
+
+  // Navigate to state/city on map
+  const navigateToLocation = (state, city) => {
+    if (state === 'all') {
+      // Center on India
+      if (map.current) {
+        map.current.setView([20.5937, 78.9629], 5);
+      }
+      return;
+    }
+
+    // Find a location that matches the state/city
+    const stateLocations = mockData.filter(loc => 
+      loc.state === state && 
+      (city === 'all' || loc.city === city)
+    );
+    
+    if (stateLocations.length > 0) {
+      const centerLoc = stateLocations[0];
+      if (map.current) {
+        map.current.setView(
+          [centerLoc.coordinates[0], centerLoc.coordinates[1]], 
+          city === 'all' ? 8 : 12
+        );
+      }
+    }
+  };
+
+  // Effect to navigate to location when state/city changes
+  useEffect(() => {
+    navigateToLocation(selectedState, selectedCity);
+  }, [selectedState, selectedCity]);
 
   // Simplified filter options
   const filterOptions = [
@@ -209,8 +407,35 @@ const FoodVolunteerTracker = () => {
         >
           <h2 className="mb-4 text-primary">
             <i className="bi bi-geo-alt-fill me-2"></i>
-            Food & Helper Finder
+            India Food & Helper Finder
           </h2>
+
+          {/* Location Filters */}
+          <div className="mb-4">
+            <label className="form-label fw-bold">Select Location</label>
+            <div className="mb-3">
+              <select 
+                className="form-select mb-2"
+                value={selectedState}
+                onChange={(e) => setSelectedState(e.target.value)}
+              >
+                {indianStates.map(state => (
+                  <option key={state.value} value={state.value}>{state.label}</option>
+                ))}
+              </select>
+              
+              <select 
+                className="form-select"
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                disabled={selectedState === 'all'}
+              >
+                {cities.map(city => (
+                  <option key={city.value} value={city.value}>{city.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           {/* Simplified Search Form */}
           <form onSubmit={handleSearch} className="mb-4">
@@ -222,10 +447,9 @@ const FoodVolunteerTracker = () => {
                 type="text"
                 className="form-control form-control-lg"
                 id="address"
-                placeholder="Your address or neighborhood"
+                placeholder="Your address or locality"
                 value={searchAddress}
                 onChange={(e) => setSearchAddress(e.target.value)}
-                required
               />
             </div>
 
@@ -309,7 +533,7 @@ const FoodVolunteerTracker = () => {
             {locations.length === 0 && !loading && (
               <div className="alert alert-info">
                 <i className="bi bi-info-circle me-2"></i>
-                Enter your location above to find help near you.
+                Select a location and search to find help near you.
               </div>
             )}
 
@@ -391,6 +615,7 @@ const FoodVolunteerTracker = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setSelectedLocation(location);
+                        map.current.setView([location.coordinates[0], location.coordinates[1]], 15);
                       }}
                     >
                       <i className="bi bi-map"></i>

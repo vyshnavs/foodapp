@@ -11,10 +11,10 @@ const HomePage = () => {
         <div>
             <HeroSection />
             <LiveFood/>
-            <EmergencyZones/>
-            <TrendCommunities/>
+           <TrendCommunities/>
             <TrendFoods/>
             <TrendDonors/>
+            <EmergencyZones/>
             <Footer/>
         </div>
         

@@ -14,7 +14,7 @@ const HeroSection = () => {
               <a href="/find-food" className="btn btn-success btn-lg me-2 mb-2">
                 <span className="me-2">🟢</span> Find Food
               </a>
-              <a href="/donate-food" className="btn btn-danger btn-lg mb-2">
+              <a href="/login" className="btn btn-danger btn-lg mb-2">
                 <span className="me-2">🔴</span> Donate Now
               </a>
             </div>

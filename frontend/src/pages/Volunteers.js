@@ -1,15 +1,34 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import VolunteerImg from './images/donerimages/donor.png';
 const VolunteerListing = () => {
   // Sample volunteer data
   const initialVolunteers = [
-    { id: 1, name: 'Sarah Johnson', location: 'Seattle', workingDays: ['Monday', 'Wednesday', 'Friday'], photo: '/api/placeholder/80/80' },
-    { id: 2, name: 'Miguel Rodriguez', location: 'Portland', workingDays: ['Tuesday', 'Thursday', 'Saturday'], photo: '/api/placeholder/80/80' },
-    { id: 3, name: 'Aisha Patel', location: 'Seattle', workingDays: ['Monday', 'Tuesday', 'Friday'], photo: '/api/placeholder/80/80' },
-    { id: 4, name: 'David Kim', location: 'Vancouver', workingDays: ['Wednesday', 'Thursday', 'Sunday'], photo: '/api/placeholder/80/80' },
-    { id: 5, name: 'Emma Wilson', location: 'Portland', workingDays: ['Monday', 'Wednesday', 'Saturday'], photo: '/api/placeholder/80/80' },
-    { id: 6, name: 'James Chen', location: 'Vancouver', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: '/api/placeholder/80/80' }
+    { id: 1, name: 'Aarav Sharma', location: 'Mumbai', workingDays: ['Monday', 'Wednesday', 'Friday'], photo: VolunteerImg },
+    { id: 2, name: 'Vihaan Patel', location: 'Delhi', workingDays: ['Tuesday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 3, name: 'Anaya Iyer', location: 'Bangalore', workingDays: ['Monday', 'Tuesday', 'Friday'], photo: VolunteerImg },
+    { id: 4, name: 'Kabir Reddy', location: 'Hyderabad', workingDays: ['Wednesday', 'Thursday', 'Sunday'], photo: VolunteerImg },
+    { id: 5, name: 'Saanvi Nair', location: 'Chennai', workingDays: ['Monday', 'Wednesday', 'Saturday'], photo: VolunteerImg },
+    { id: 6, name: 'Reyansh Mehta', location: 'Kolkata', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 7, name: 'Advait Joshi', location: 'Pune', workingDays: ['Monday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 8, name: 'Ishita Sharma', location: 'Ahmedabad', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 9, name: 'Rohan Gupta', location: 'Lucknow', workingDays: ['Monday', 'Wednesday', 'Friday'], photo: VolunteerImg },
+    { id: 10, name: 'Meera Das', location: 'Jaipur', workingDays: ['Tuesday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 11, name: 'Aryan Kapoor', location: 'Chandigarh', workingDays: ['Monday', 'Tuesday', 'Friday'], photo: VolunteerImg },
+    { id: 12, name: 'Tanya Bansal', location: 'Bhopal', workingDays: ['Wednesday', 'Thursday', 'Sunday'], photo: VolunteerImg },
+    { id: 13, name: 'Ritik Verma', location: 'Indore', workingDays: ['Monday', 'Wednesday', 'Saturday'], photo: VolunteerImg },
+    { id: 14, name: 'Sneha Pillai', location: 'Thiruvananthapuram', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 15, name: 'Karan Saxena', location: 'Nagpur', workingDays: ['Monday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 16, name: 'Pooja Menon', location: 'Coimbatore', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 17, name: 'Harshit Malhotra', location: 'Mysore', workingDays: ['Monday', 'Wednesday', 'Friday'], photo: VolunteerImg },
+    { id: 18, name: 'Bhavya Choudhury', location: 'Raipur', workingDays: ['Tuesday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 19, name: 'Siddharth Rao', location: 'Dehradun', workingDays: ['Monday', 'Tuesday', 'Friday'], photo: VolunteerImg },
+    { id: 20, name: 'Divya Srivastava', location: 'Patna', workingDays: ['Wednesday', 'Thursday', 'Sunday'], photo: VolunteerImg },
+    { id: 21, name: 'Neha Agarwal', location: 'Surat', workingDays: ['Monday', 'Wednesday', 'Saturday'], photo: VolunteerImg },
+    { id: 22, name: 'Amit Thakur', location: 'Shimla', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 23, name: 'Mitali Roy', location: 'Guwahati', workingDays: ['Monday', 'Thursday', 'Saturday'], photo: VolunteerImg },
+    { id: 24, name: 'Vivek Kulkarni', location: 'Panaji', workingDays: ['Tuesday', 'Friday', 'Sunday'], photo: VolunteerImg },
+    { id: 25, name: 'Aarohi Jain', location: 'Ranchi', workingDays: ['Monday', 'Wednesday', 'Friday'], photo: VolunteerImg },
   ];
 
   const [volunteers, setVolunteers] = useState(initialVolunteers);
@@ -55,7 +74,7 @@ const VolunteerListing = () => {
     <div className="container py-5">
       <div className="row mb-4">
         <div className="col-12">
-          <h1 className="display-5 fw-bold text-primary mb-4">
+          <h1 className="display-5 fw-bold text-dark mb-4">
             <i className="bi bi-people-fill me-2"></i>
             Volunteer Directory
           </h1>
@@ -129,7 +148,7 @@ const VolunteerListing = () => {
       {/* Results Count */}
       <div className="row mb-4">
         <div className="col-12">
-          <div className="alert alert-info">
+          <div className="alert alert-secondary">
             <i className="bi bi-info-circle me-2"></i>
             {filteredVolunteers.length} volunteers found
           </div>
@@ -140,13 +159,13 @@ const VolunteerListing = () => {
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {filteredVolunteers.map((volunteer) => (
           <div key={volunteer.id} className="col">
-            <div className="card h-100 shadow-sm hover-shadow transition-all">
+            <div className="card h-100 shadow-sm">
               <div className="card-body">
                 <div className="d-flex align-items-center mb-3">
                   <img 
                     src={volunteer.photo} 
                     alt={volunteer.name} 
-                    className="rounded-circle me-3 border border-3 border-primary"
+                    className="rounded-circle me-3 border border-3 border-secondary"
                     width="70" 
                     height="70" 
                   />
@@ -159,20 +178,20 @@ const VolunteerListing = () => {
                   </div>
                 </div>
                 
-                <h6 className="card-subtitle mb-2 text-primary fw-bold">
+                <h6 className="card-subtitle mb-2 text-secondary fw-bold">
                   <i className="bi bi-calendar-week me-1"></i>
                   Working Days:
                 </h6>
                 <div className="mb-3">
                   {volunteer.workingDays.map(day => (
-                    <span key={day} className="badge bg-primary bg-opacity-10 text-primary me-1 mb-1 px-2 py-1">
+                    <span key={day} className="badge bg-secondary bg-opacity-10 text-secondary me-1 mb-1 px-2 py-1">
                       {day}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="card-footer border-0 bg-white pb-3">
-                <button className="btn btn-primary w-100">
+                <button className="btn btn-secondary w-100">
                   <i className="bi bi-person-plus me-2"></i>
                   Connect
                 </button>
@@ -193,7 +212,7 @@ const VolunteerListing = () => {
               No volunteers match your search criteria. Try adjusting your filters.
             </p>
             <button 
-              className="btn btn-outline-primary mt-3"
+              className="btn btn-outline-secondary mt-3"
               onClick={() => {
                 setSearchTerm('');
                 setSelectedDay('All');

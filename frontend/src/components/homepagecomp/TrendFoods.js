@@ -1,13 +1,18 @@
 import React from 'react';
 import { MapPin, Clock, User } from 'lucide-react';
-
+import img1 from './images/foodimages/img1.png';
+import img2 from './images/foodimages/img2.png';
+import img3 from './images/foodimages/img3.png';
+import img4 from './images/foodimages/img4.png';
+import img5 from './images/foodimages/img5.png';
+import img6 from './images/foodimages/img6.png';
 const ListedFoodsByDonors = () => {
   // Sample data
   const foodListings = [
     {
       id: 1,
       name: 'Fresh Salads & Sandwiches',
-      image: '/api/placeholder/300/200',
+      image: img1,
       location: 'Green Cafe',
       expiry: '3 hours',
       donor: 'Green Cafe',
@@ -16,7 +21,7 @@ const ListedFoodsByDonors = () => {
     {
       id: 2,
       name: 'Bread & Pastries Assortment',
-      image: '/api/placeholder/300/200',
+      image: img2,
       location: 'Family Bakery',
       expiry: '5 hours',
       donor: 'Family Bakery',
@@ -25,7 +30,7 @@ const ListedFoodsByDonors = () => {
     {
       id: 3,
       name: 'Fresh Produce Bundle',
-      image: '/api/placeholder/300/200',
+      image: img3,
       location: 'Local Farmer\'s Market',
       expiry: '8 hours',
       donor: 'Urban Farm Collective',
@@ -34,7 +39,7 @@ const ListedFoodsByDonors = () => {
     {
       id: 4,
       name: 'Cooked Meals',
-      image: '/api/placeholder/300/200',
+      image: img4,
       location: 'Community Kitchen',
       expiry: '4 hours',
       donor: 'Restaurant Alliance',
@@ -43,7 +48,7 @@ const ListedFoodsByDonors = () => {
     {
       id: 5,
       name: 'Dairy Products',
-      image: '/api/placeholder/300/200',
+      image:  img5,
       location: 'SuperMart',
       expiry: '6 hours',
       donor: 'SuperMart',
@@ -52,7 +57,7 @@ const ListedFoodsByDonors = () => {
     {
       id: 6,
       name: 'Canned Goods Assortment',
-      image: '/api/placeholder/300/200',
+      image: img6,
       location: 'Food Bank Central',
       expiry: '3 days',
       donor: 'Food Bank Central',
@@ -61,7 +66,7 @@ const ListedFoodsByDonors = () => {
   ];
 
   return (
-    <section className="py-5 bg-white">
+    <section className="py-5 bg-light">
       <div className="container">
         <h2 className="text-center mb-5">Latest Food Donations</h2>
         
@@ -92,7 +97,7 @@ const ListedFoodsByDonors = () => {
                     <User size={16} className="text-secondary me-1" />
                     <span className="text-muted">Donor: {food.donor}</span>
                   </div>
-                  <button className="btn btn-primary w-100">Request Food</button>
+                  <a href="#" className="btn btn-primary w-100">Request Food</a>
                 </div>
               </div>
             </div>
@@ -100,7 +105,7 @@ const ListedFoodsByDonors = () => {
         </div>
         
         <div className="text-center mt-4">
-          <button className="btn btn-outline-primary">View All Available Food</button>
+          <a href="/find-food" className="btn btn-outline-primary">View All Available Food</a>
         </div>
       </div>
     </section>

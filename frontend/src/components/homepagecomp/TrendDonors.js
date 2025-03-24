@@ -79,12 +79,6 @@ const MajorDonors = () => {
             <div key={donor.id} className="col-md-6 col-lg-3 mb-4">
               <div className="card h-100 border-0 shadow-sm text-center">
                 <div className="card-body p-4">
-                  <img 
-                    src={donor.logo} 
-                    alt={donor.name} 
-                    className="mb-3 rounded-circle"
-                    width="80"
-                  />
                   <h5 className="card-title">{donor.name}</h5>
                   <p className="text-success fw-bold mb-2">{donor.impact}</p>
                   <p className="card-text text-muted mb-3">{donor.description}</p>

@@ -1,40 +1,39 @@
 import React from 'react';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
-
+import logo from './images/logo.png';
 const Footer = () => {
   return (
     <footer className="bg-dark text-white pt-5 pb-4">
       <div className="container">
         <div className="row">
-          {/* Logo and Description */}
-          <div className="col-lg-4 mb-4 mb-lg-0">
-            <div className="d-flex align-items-center mb-3">
-              <img src="/api/placeholder/40/40" alt="Logo" className="me-2" />
-              <h5 className="mb-0 text-success">FoodShare</h5>
-            </div>
-            <p className=" mb-3">
-              Connecting excess food with those who need it most. Join our mission to reduce food waste and fight hunger in communities.
-            </p>
-            <div className="d-flex">
-              <a href="#" className="text-white me-3">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="text-white me-3">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-white me-3">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="text-white me-3">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-white">
-                <Youtube size={20} />
-              </a>
-            </div>
-          </div>
+                <div className="col-lg-4 mb-4 mb-lg-0">
+                <div className="d-flex align-items-center mb-3">
+                  <img src={logo} alt="Logo" className="me-2" style={{ width: '50px', height: '50px' }} />
+                  <h5 className="mb-0 text-success">Padeyam</h5>
+                </div>
+                <p className=" mb-3">
+                  Connecting excess food with those who need it most. Join our mission to reduce food waste and fight hunger in communities.
+                </p>
+                <div className="d-flex">
+                  <a href="#" className="text-white me-3">
+                  <Facebook size={20} />
+                  </a>
+                  <a href="#" className="text-white me-3">
+                  <Twitter size={20} />
+                  </a>
+                  <a href="#" className="text-white me-3">
+                  <Instagram size={20} />
+                  </a>
+                  <a href="#" className="text-white me-3">
+                  <Linkedin size={20} />
+                  </a>
+                  <a href="#" className="text-white">
+                  <Youtube size={20} />
+                  </a>
+                </div>
+                </div>
 
-          {/* Quick Links */}
+                {/* Quick Links */}
           <div className="col-lg-2 col-md-6 mb-4 mb-md-0">
             <h5 className="mb-3">Quick Links</h5>
             <ul className="list-unstyled">

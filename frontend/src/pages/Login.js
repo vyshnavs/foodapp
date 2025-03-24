@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
-
-// Your existing fetchData function
-export const fetchData = async () => {
-  try {
-    const { data } = await axios.get("http://localhost:5000/api/users/getData");
-    return data;
-  } catch (error) {
-    console.error("API Error:", error);
-    return [];
-  }
-};
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,38 +7,60 @@ const LoginPage = () => {
   const [role, setRole] = useState('donor');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [dataFetched, setDataFetched] = useState(false);
+  const [userData, setUserData] = useState([]);
 
-  // Fetch user data on component mount
+  // Manually store user data in useEffect
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const data = await fetchData();
-        setUserData(data);
-        setDataFetched(true);
-        console.log("User data fetched successfully");
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setError("Unable to connect to the server. Please try again later.");
+    const users = [
+      { 
+        id: 1, 
+        name: 'John Doe', 
+        email: 'john@example.com', 
+        password: 'password123', 
+        role: 'donor', 
+        phone: '123-456-7890', 
+        address: '123 Main St, City, Country', 
+        description: 'Regular donor helping the community.' 
+      },
+      { 
+        id: 2, 
+        name: 'Jane Doe', 
+        email: 'jane@example.com', 
+        password: 'password456', 
+        role: 'volunteer', 
+        phone: '987-654-3210', 
+        address: '456 Elm St, City, Country', 
+        description: 'Volunteer passionate about food distribution.' 
+      },
+     { 
+        id: 3, 
+        name: 'Sijin', 
+        email: 'sijin@gmail.com', 
+        password: 'Sijin@123', 
+        role: 'volunteer', 
+        phone: '9526245484', 
+        address: 'kannur', 
+        description: 'I love social service.' 
+      },
+       { 
+        id: 4, 
+        name: 'abijith', 
+        email: 'abijith@gmail.com', 
+        password: 'Abigith@123', 
+        role: 'volunteer', 
+        phone: '9526245484', 
+        address: 'vadakara,kozhikode', 
+        description: 'I love social service.' 
       }
-    };
-
-    getUserData();
+    ];
+    setUserData(users);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
-    // Check if data has been fetched
-    if (!dataFetched || !userData) {
-      setError("Still loading user data. Please wait a moment and try again.");
-      setLoading(false);
-      return;
-    }
-    
+
     try {
       // Find the user that matches the provided credentials
       const matchedUser = userData.find(user => 
@@ -58,33 +68,33 @@ const LoginPage = () => {
         user.password === password && 
         user.role === role
       );
-      
+
       if (!matchedUser) {
         throw new Error('Invalid email, password, or role. Please try again.');
       }
-      
-      // Remove sensitive data before storing in local session
+
+      // Store additional user details in local storage
       const userSession = {
         id: matchedUser.id,
         name: matchedUser.name,
         email: matchedUser.email,
         role: matchedUser.role,
-        // Add any other non-sensitive fields you want to keep
+        phone: matchedUser.phone,
+        address: matchedUser.address,
+        description: matchedUser.description,
       };
-      
+
       // Store user data in localStorage for persistence
-      localStorage.setItem('user', JSON.stringify(userSession));
-      
-      // Also set to sessionStorage if you want it cleared on browser close
-      sessionStorage.setItem('user', JSON.stringify(userSession));
-      
+      localStorage.setItem('userSession', JSON.stringify(userSession));
+
       console.log('Login successful', userSession);
-      
-      // Redirect user to appropriate dashboard based on role
-      window.location.href = `/${role}/dashboard`;
-      
+
+      // Redirect user to home page
+      window.location.href = '/';
+
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.');
+      alert(err.message); // Show alert on failed login
     } finally {
       setLoading(false);
     }
@@ -97,19 +107,13 @@ const LoginPage = () => {
           <div className="card shadow mt-5">
             <div className="card-body p-4">
               <h2 className="text-center mb-4">Login</h2>
-              
-              {!dataFetched && !error && (
-                <div className="alert alert-info" role="alert">
-                  Loading user data...
-                </div>
-              )}
-              
+
               {error && (
                 <div className="alert alert-danger" role="alert">
                   {error}
                 </div>
               )}
-              
+
               <form onSubmit={handleSubmit}>
                 {/* Email Input */}
                 <div className="mb-3">
@@ -122,10 +126,9 @@ const LoginPage = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
-                    disabled={!dataFetched}
                   />
                 </div>
-                
+
                 {/* Password Input */}
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">Password</label>
@@ -137,10 +140,9 @@ const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     required
-                    disabled={!dataFetched}
                   />
                 </div>
-                
+
                 {/* Role Selection */}
                 <div className="mb-4">
                   <label className="form-label d-block">Select your role</label>
@@ -153,7 +155,6 @@ const LoginPage = () => {
                       value="donor"
                       checked={role === 'donor'}
                       onChange={() => setRole('donor')}
-                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="donor">Donor</label>
                   </div>
@@ -166,7 +167,6 @@ const LoginPage = () => {
                       value="volunteer"
                       checked={role === 'volunteer'}
                       onChange={() => setRole('volunteer')}
-                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="volunteer">Volunteer</label>
                   </div>
@@ -179,23 +179,22 @@ const LoginPage = () => {
                       value="recipient"
                       checked={role === 'recipient'}
                       onChange={() => setRole('recipient')}
-                      disabled={!dataFetched}
                     />
                     <label className="form-check-label" htmlFor="recipient">Recipient</label>
                   </div>
                 </div>
-                
+
                 {/* Login Button */}
                 <div className="d-grid mb-3">
                   <button 
                     type="submit" 
                     className="btn btn-primary"
-                    disabled={loading || !dataFetched}
+                    disabled={loading}
                   >
                     {loading ? 'Logging in...' : 'Login'}
                   </button>
                 </div>
-                
+
                 {/* Register Link */}
                 <div className="text-center">
                   <p className="mb-0">
