@@ -15,19 +15,19 @@ const Footer = () => {
                   Connecting excess food with those who need it most. Join our mission to reduce food waste and fight hunger in communities.
                 </p>
                 <div className="d-flex">
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                   <Facebook size={20} />
                   </a>
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                   <Twitter size={20} />
                   </a>
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                   <Instagram size={20} />
                   </a>
-                  <a href="#" className="text-white me-3">
+                  <a href="" className="text-white me-3">
                   <Linkedin size={20} />
                   </a>
-                  <a href="#" className="text-white">
+                  <a href="" className="text-white">
                   <Youtube size={20} />
                   </a>
                 </div>
