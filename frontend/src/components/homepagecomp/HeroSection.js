@@ -6,6 +6,7 @@ const HeroSection = () => {
       <div className="container">
         <div className="row align-items-center">
           <div className="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+            <p className='text-danger'>"This is a prototype website built as part of a hackathon project.!!"</p>
             <h1 className="display-4 fw-bold mb-4">End Food Waste, Feed Communities</h1>
             <p className="lead mb-4">
               Connect excess food with those who need it most. Join our mission to reduce food waste and fight hunger in communities.
