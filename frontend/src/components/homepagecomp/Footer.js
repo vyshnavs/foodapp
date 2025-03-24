@@ -48,12 +48,12 @@ const Footer = () => {
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/donate-food" className=" text-decoration-none hover-white">
+                <a href="/find-food" className=" text-decoration-none hover-white">
                   🎁 Donate Food
                 </a>
               </li>
               <li className="mb-2">
-                <a href="/major-donors" className=" text-decoration-none hover-white">
+                <a href="/donors" className=" text-decoration-none hover-white">
                   🏅 Major Donors
                 </a>
               </li>
@@ -103,7 +103,7 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li className="mb-3 d-flex align-items-start">
                 <MapPin size={18} className="text-success mt-1 me-2" />
-                <span className="text-muted">123 Community Way, Food City, FC 12345</span>
+                <span className="text-muted">postal address</span>
               </li>
               <li className="mb-3 d-flex align-items-center">
                 <Phone size={18} className="text-success me-2" />
