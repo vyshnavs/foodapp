@@ -51,7 +51,7 @@ const Header = () => {
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" to="/">
           <img src={Logo} alt="Logo" className="me-2" style={{ width: '30px', height: '30px' }} />
-          <span className="fw-bold text-success">Padeyam</span>
+          <span className="fw-bold text-success">foodapp</span>
         </Link>
 
         <button
