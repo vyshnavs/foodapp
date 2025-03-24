@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, User, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import Logo from './logo.png';
+import Logo from '../pages/images/logo.png';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Ensure Bootstrap JS is imported
 
